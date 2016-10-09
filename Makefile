@@ -41,7 +41,7 @@
 
 
 # Target file name (without extension).
-TARGET = example
+TARGET = teensy_frequency_detector
 
 
 # List C source files here. (C dependencies are automatically generated.)
@@ -55,8 +55,8 @@ SRC =	$(TARGET).c \
 #
 #MCU = at90usb162	# Teensy 1.0
 #MCU = atmega32u4	# Teensy 2.0
-MCU = at90usb646	# Teensy++ 1.0
-#MCU = at90usb1286	# Teensy++ 2.0
+#MCU = at90usb646	# Teensy++ 1.0
+MCU = at90usb1286	# Teensy++ 2.0
 
 
 # Processor frequency.
