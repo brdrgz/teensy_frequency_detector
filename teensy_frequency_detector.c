@@ -34,14 +34,19 @@ int main(void)
     // baseline_adc_val = 1023 * 1.66 / 5;
     // adc resolution / system voltage = adc reading / measured voltage
     // val >= 347.82
-    if (val >= 348) {
-      PORTC = 3;
-      _delay_ms(1);
+    if (val == 1023 || val == 0) {
+      PORTC = 2;
     } else {
       PORTC = 0;
-      _delay_ms(1);
     }
 
+    if (val >= 348) {
+      PORTC |= 1;
+    } else {
+      PORTC &= ~1;
+    }
+
+    _delay_ms(1);
     val = 0;
 	}
 }
