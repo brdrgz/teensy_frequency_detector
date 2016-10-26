@@ -1,5 +1,4 @@
 #include <avr/io.h>
-#include <avr/pgmspace.h>
 #include <util/delay.h>
 #include "sampling.h"
 
@@ -10,7 +9,6 @@
 int main(void)
 {
 	uint16_t val;
-  //double readcount = 0.0;
 
 	CPU_PRESCALE(CPU_125kHz);
 	_delay_ms(1);		// allow slow power supply startup
@@ -30,24 +28,23 @@ int main(void)
 	while (1) {
 		val = adc_read();
 
-    // baseline_adc_val = 1023 * 1.66 / 3.3;
-    // baseline_adc_val = 1023 * 1.66 / 5;
-    // adc resolution / system voltage = adc reading / measured voltage
-    // val >= 347.82
-    if (val == 1023 || val == 0) {
-      PORTC = 2;
-    } else {
-      PORTC = 0;
-    }
+    // mic is clipping
+    PORTC = (val == 1023 || val == 0) ? 2 : 0;
 
+    // adc resolution / system voltage = adc reading / measured voltage
+    // 1023 / 5 = x / v_x
+    // mic sits at 1.66V (silence)
+    // adc == 340
+    // scope analysis shows sound pickup at 1.7V (moderate volume)
+    // adc >= 348
     if (val >= 348) {
       PORTC |= 1;
     } else {
       PORTC &= ~1;
     }
 
+    // need to be able to actually see the LED!
     _delay_ms(1);
-    val = 0;
 	}
 }
 
