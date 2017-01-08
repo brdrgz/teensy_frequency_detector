@@ -8,11 +8,11 @@
 
 int main(void)
 {
-	uint16_t val;
+  uint16_t val;
 
-	CPU_PRESCALE(CPU_125kHz);
-	_delay_ms(1);		// allow slow power supply startup
-	CPU_PRESCALE(CPU_16MHz); // set for 16 MHz clock
+  CPU_PRESCALE(CPU_125kHz);
+  _delay_ms(1);		// allow slow power supply startup
+  CPU_PRESCALE(CPU_16MHz); // set for 16 MHz clock
 
   // only pin F0 has an analog signal
   DIDR0 = 0x01;
@@ -23,10 +23,10 @@ int main(void)
   // turn off all ports
   PORTB, PORTC, PORTD, PORTE = 0x00;
 
-	adc_start(ADC_MUX_PIN_F0, ADC_REF_POWER);
+  adc_start(ADC_MUX_PIN_F0, ADC_REF_POWER);
 
-	while (1) {
-		val = adc_read();
+  while (1) {
+    val = adc_read();
 
     // mic is clipping
     PORTC = (val == 1023 || val == 0) ? 2 : 0;
@@ -45,7 +45,7 @@ int main(void)
 
     // need to be able to actually see the LED!
     _delay_ms(1);
-	}
+  }
 }
 
 
